@@ -8,14 +8,24 @@ import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
 import com.runli.domain.Employee;
+import com.runli.util.HibernateUtil;
 import com.runli.util.MySessionFactory;
 
 public class TestMain2 {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		Configuration cfg = new Configuration().configure("hibernate.cfg.xml");
-		SessionFactory sf = cfg.buildSessionFactory();
+//		Configuration cfg = new Configuration().configure("hibernate.cfg.xml");
+//		Session session = MySessionFactory.getSessionFactory().openSession();
+//		Employee emp = (Employee)session.load(Employee.class, 1);
+//		//System.out.println(emp);
+		
+		Session s1 = HibernateUtil.openSession();
+//		Session s1 = HibernateUtil.getCurrentSession();
+		Session s2 = HibernateUtil.getCurrentSession();
+		
+		System.out.println(s1.hashCode() + " " + s2.hashCode());
+		
 		
 	}
 
@@ -39,9 +49,7 @@ public class TestMain2 {
 	}
 
 	private static void addEmployee() {
-		Configuration cfg = new Configuration().configure("hibernate.cfg.xml");
-		SessionFactory sf = cfg.buildSessionFactory();
-		Session session = sf.openSession();
+		Session session = MySessionFactory.getSessionFactory().openSession();
 		Transaction t = session.beginTransaction();
 		Employee emp1 = new Employee();
 		emp1.setName("runli");
